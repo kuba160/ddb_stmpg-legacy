@@ -12,30 +12,12 @@ jobs:
     - name: Package download
       run: sudo apt-get --assume-yes install libmpg123-dev zip gzip tar
     - name: make
-      run: make && mkdir binary && make install PREFIX=./
+      run: make
     - name: Archive
-      run: echo $GITHUB_REPOSITORY | sed -n -e 's/^.*\///p'`.zip >projname && echo -$GITHUB_SHA | cut -c -9 >>projname && zip ./binary/`projname`.zip mp3.so && echo "::set-env name=projname::`cat projname`"
-      env:
-        projname: projname
-    - uses: actions/create-release@v1
-      name: Create Release
-      id: create_release
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+      run: mkdir binary && zip binary/mp3.zip mp3.so
+    - uses: actions/upload-artifact@v1
       with:
-        tag_name: build_${{ github.ref }}
-        release_name: Release ${{ github.ref }}
-        draft: false
-        prerelease: true
-    - name: Upload Release Asset
-      id: upload-release-asset 
-      uses: actions/upload-release-asset@v1.0.1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-        asset_path: ./binary/${{ projname }}.zip
-        asset_name: ${{ projname }}.zip
-        asset_content_type: application/zip
+        name: my-artifact
+        path: ./binary
 
 
