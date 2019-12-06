@@ -12,9 +12,9 @@ jobs:
     - name: Package download
       run: sudo apt-get --assume-yes install libmpg123-dev zip gzip tar
     - name: make
-      run: make && mkdir binary && make install PREFIX=./binary
+      run: make && mkdir binary && make install PREFIX=./
     - name: Archive
-      run: zip binary/`echo $GITHUB_REPOSITORY | sed -n -e 's/^.*\///p'`.zip mp3.so
+      run: echo $GITHUB_REPOSITORY | sed -n -e 's/^.*\///p'`.zip >projname && echo -$GITHUB_SHA | cut -c -9 >>projname && zip ./binary/`projname`.zip mp3.so
     - uses: actions/create-release@v1
       name: Create Release
       id: create_release
@@ -32,8 +32,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-        asset_path: ./binary/*
-        asset_name: ddb_stdmpg-legacy.zip
+        asset_path: ./binary/`projname`.zip
+        asset_name: `projname`.zip
         asset_content_type: application/zip
 
 
