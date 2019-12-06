@@ -61,7 +61,7 @@ $(OBJS): %.o: %.c
 	$(CC) -std=$(STD) -c $(CFLAGS)  $< -o $@ 
 
 install:
-	cp $(PLUGNAME).$(SUFFIX) $(PREFIX)
+	cp $(PLUGNAME).$(SUFFIX) $(PREFIX)/$(PLUGNAME).$(SUFFIX)
 
 clean:
 	rm -fv $(PLUGNAME).o $(PLUGNAME).$(SUFFIX)
