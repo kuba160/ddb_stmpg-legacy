@@ -15,9 +15,9 @@ jobs:
       run: make && mkdir binary && make install PREFIX=./binary
     - name: Archive
       run: zip binary/`echo $GITHUB_REPOSITORY | sed -n -e 's/^.*\///p'`.zip mp3.so
-    - name: Create Release
+    - uses: actions/create-release@v1
+        name: Create Release
         id: create_release
-        uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
