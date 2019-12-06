@@ -12,7 +12,7 @@ jobs:
     - name: Package download
       run: sudo apt-get --assume-yes install libmpg123-dev zip gzip tar
     - name: make
-      run: make && make install PREFIX=./binary
+      run: make && mkdir binary && make install PREFIX=./binary
     - uses: actions/upload-artifact@v1
       with:
         name: x86_64-binary-${{ github.sha }}
