@@ -19,8 +19,8 @@ CC=gcc
 CXX=g++
 STD=gnu99
 
-CFLAGS += -fPIC -I /usr/local/include -Wall
-CXXFLAGS += -fPIC -I /usr/local/include -Wall
+CFLAGS += -fPIC -I /usr/local/include -I ./include -Wall
+CXXFLAGS += -fPIC -I /usr/local/include -I ./include -Wall
 ifeq ($(UNAME_S),Darwin)
     CFLAGS+=-I $(DEADBEEF_OSX)/Contents/Headers
     CXXFLAGS+=-I $(DEADBEEF_OSX)/Contents/Headers
