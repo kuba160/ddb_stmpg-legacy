@@ -12,12 +12,10 @@ jobs:
     - name: Package download
       run: sudo apt-get --assume-yes install libmpg123-dev zip gzip tar
     - name: make
-      run: make
-    - name: Archive
-      run: mkdir binary && zip binary/mp3.zip mp3.so
+      run: make && make install PREFIX=./binary
     - uses: actions/upload-artifact@v1
       with:
-        name: my-artifact
+        name: x86_64-binary-${{ github.sha }}
         path: ./binary
 
 
