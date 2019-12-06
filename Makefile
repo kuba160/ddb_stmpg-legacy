@@ -19,8 +19,8 @@ CC=gcc
 CXX=g++
 STD=gnu99
 
-CFLAGS += -fPIC -I /usr/local/include -Wall
-CXXFLAGS += -fPIC -I /usr/local/include -Wall
+CFLAGS += -fPIC -I /usr/local/include -I ./include -Wall
+CXXFLAGS += -fPIC -I /usr/local/include -I ./include -Wall
 ifeq ($(UNAME_S),Darwin)
     CFLAGS+=-I $(DEADBEEF_OSX)/Contents/Headers
     CXXFLAGS+=-I $(DEADBEEF_OSX)/Contents/Headers
@@ -58,10 +58,10 @@ $(PLUGNAME).$(SUFFIX): $(OBJS)
 	$(CC) -std=$(STD) -shared $(CFLAGS) -o $(PLUGNAME).$(SUFFIX) $(OBJS) $(LIBS) $(LDFLAGS)
 
 $(OBJS): %.o: %.c
-	$(CC) -std=$(STD) -c $(CFLAGS)  $< -o $@ 
+	$(CC) -std=$(STD) -c $(CFLAGS)  $< -o $@
 
 install:
-	cp $(PLUGNAME).$(SUFFIX) $(PREFIX)
+	cp $(PLUGNAME).$(SUFFIX) $(PREFIX)/$(PLUGNAME).$(SUFFIX)
 
 clean:
 	rm -fv $(PLUGNAME).o $(PLUGNAME).$(SUFFIX)
