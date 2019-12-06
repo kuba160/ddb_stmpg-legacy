@@ -14,7 +14,7 @@ jobs:
     - name: make
       run: make && mkdir binary && make install PREFIX=./
     - name: Archive
-      run: echo $GITHUB_REPOSITORY | sed -n -e 's/^.*\///p'`.zip >projname && echo -$GITHUB_SHA | cut -c -9 >>projname && zip ./binary/`projname`.zip mp3.so
+      run: echo $GITHUB_REPOSITORY | sed -n -e 's/^.*\///p'`.zip >projname && echo -$GITHUB_SHA | cut -c -9 >>projname && zip ./binary/`projname`.zip mp3.so && echo "::set-env name=projname::`cat projname`"
     - uses: actions/create-release@v1
       name: Create Release
       id: create_release
